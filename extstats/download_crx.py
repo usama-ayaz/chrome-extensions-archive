@@ -4,7 +4,7 @@ import os.path
 import sys
 
 # DOWNLOAD_URL = "https://clients2.google.com/service/update2/crx?response=redirect&os=cros&prodversion=9999&x=id%3D{ID}%26uc"
-DOWNLOAD_URL = "https://clients2.google.com/service/update2/crx?response=redirect&os=cros&arch=x86-64&nacl_arch=x86-64&prod=chromiumcrx&prodchannel=unknown&prodversion=9999&x=id%3D{ID}%26uc"
+DOWNLOAD_URL = "https://clients2.google.com/service/update2/crx?response=redirect&os=linux&arch=x86-64&os_arch=x86-64&nacl_arch=x86-64&prod=chromecrx&prodchannel=unknown&prodversion=83.0.4103.116&acceptformat=crx2,crx3&x=id%3D{ID}%26uc"
 DESTINATION = "{ID}.crx"
 
 
