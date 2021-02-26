@@ -14,9 +14,12 @@ import sys
 
 from tqdm import tqdm
 
+LIMIT_EXTENSIONS = 100
+
 class Sitemap(object):
     """Class to parse Sitemap (type=urlset) and Sitemap Index
     (type=sitemapindex) files"""
+    sitemapCount = 0
 
     def __init__(self, xmltext):
         xmlp = lxml.etree.XMLParser(recover=True, remove_comments=True, resolve_entities=False)
@@ -70,6 +73,8 @@ def save():
         open('crawled/sitemap/result.json','w'), indent=2, sort_keys=True)
 
 def parse_sitemap(url, depth=0):
+    if Sitemap.sitemapCount >= LIMIT_EXTENSIONS:
+        return False
     resp = session.get(url)
     try:
         sitemap = Sitemap(resp.content)
@@ -81,9 +86,12 @@ def parse_sitemap(url, depth=0):
     if depth == 0:
         sitemap = tqdm(list(sitemap))
     for line in sitemap:
+        if Sitemap.sitemapCount >= LIMIT_EXTENSIONS:
+            break
         if '/webstore/sitemap?' in line['loc']:
             parse_sitemap(line['loc'], depth+1)
         else:
+            Sitemap.sitemapCount = Sitemap.sitemapCount + 1
             results.add(line['loc'].split('?')[0])
     save()
 
